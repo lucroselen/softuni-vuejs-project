@@ -24,7 +24,7 @@
           <router-link to="/add"> Add a Car </router-link>
         </li>
         <li>
-          <router-link to="javascript:void(0);"> Logout </router-link>
+          <a href="javascript:void(0);"> Logout </a>
         </li>
 
         <li>
