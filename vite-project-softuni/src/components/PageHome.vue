@@ -6,7 +6,9 @@
       <div class="home-container">
         <h1>Welcome to CARS EU</h1>
         <h2>Here you could find your dream car!</h2>
-        <a href="" class="btn-get-started">Get Started</a>
+        <router-link to="user/login" class="btn-get-started"
+          >Get Started</router-link
+        >
       </div>
     </section>
   </div>
