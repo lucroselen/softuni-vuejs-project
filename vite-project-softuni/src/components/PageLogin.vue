@@ -8,18 +8,8 @@
         <p>Glad to see you back! Please log-in to your account.</p>
       </div>
       <form>
-        <input
-          type="email"
-          name="email"
-          formControlName="email"
-          placeholder="Email Address"
-        />
-        <input
-          type="password"
-          name="password"
-          formControlName="password"
-          placeholder="Password"
-        />
+        <input type="email" name="email" placeholder="Email Address" />
+        <input type="password" name="password" placeholder="Password" />
         <button type="submit">Login</button>
       </form>
       <div class="formLink">
