@@ -6,38 +6,38 @@
     <nav>
       <ul>
         <li>
-          <a href="/"> Home </a>
+          <router-link to="/"> Home </router-link>
         </li>
         <li>
-          <a href="/all-cars"> All Cars </a>
+          <router-link to="/all-cars"> All Cars </router-link>
         </li>
         <li>
-          <a href="/top-10"> Top 10 Cars </a>
+          <router-link to="/top-10"> Top 10 Cars </router-link>
         </li>
         <li>
-          <a href="/find-us"> Find Us </a>
+          <router-link to="/find-us"> Find Us </router-link>
         </li>
         <li>
-          <a href="/user/profile"> My Profile </a>
+          <router-link to="/user/profile"> My Profile </router-link>
         </li>
         <li>
-          <a href="/add"> Add a Car </a>
+          <router-link to="/add"> Add a Car </router-link>
         </li>
         <li>
-          <a href="javascript:void(0);"> Logout </a>
+          <router-link to="javascript:void(0);"> Logout </router-link>
         </li>
 
         <li>
-          <a href="/user/login"> Login </a>
+          <router-link to="/user/login"> Login </router-link>
         </li>
         <li>
-          <a href="/user/register"> Register </a>
+          <router-link to="/user/register"> Register </router-link>
         </li>
       </ul>
     </nav>
     <div class="welcome">
       <span>Welcome, </span>
-      <a href="/user/profile"> FIRST_NAME LAST_NAME </a>
+      <router-link to="/user/profile"> FIRST_NAME LAST_NAME </router-link>
     </div>
   </header>
 </template>
