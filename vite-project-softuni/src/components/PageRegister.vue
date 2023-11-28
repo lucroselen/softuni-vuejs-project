@@ -21,7 +21,7 @@
       </form>
       <div class="formLink">
         <span>Already have an account?</span>
-        <span><a href="/user/login">Sign In</a></span>
+        <span><router-link to="/user/login">Sign In</router-link></span>
       </div>
     </div>
   </div>
