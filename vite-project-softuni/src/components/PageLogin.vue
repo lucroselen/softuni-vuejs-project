@@ -14,7 +14,7 @@
       </form>
       <div class="formLink">
         <span>Don't have an account?</span>
-        <span><a href="/user/register">Sign Up</a></span>
+        <span><router-link to="/user/register">Sign Up</router-link></span>
       </div>
     </div>
   </div>
