@@ -6,6 +6,7 @@ import PageNotFound from "../components/PageNotFound.vue";
 import PageUserProfile from "../components/PageUserProfile.vue";
 import PageAddCar from "../components/PageAddCar.vue";
 import PageEditCar from "../components/PageEditCar.vue";
+import PageFindUs from "../components/PageFindUs.vue";
 
 const routes = [
   {
@@ -15,6 +16,10 @@ const routes = [
   {
     path: "/add",
     component: PageAddCar,
+  },
+  {
+    path: "/find-us",
+    component: PageFindUs,
   },
   {
     path: "/edit",
