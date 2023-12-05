@@ -12,6 +12,8 @@ export default {
 
 <template>
   <PageHeader />
-  <router-view />
+  <main>
+    <router-view />
+  </main>
   <PageFooter />
 </template>
