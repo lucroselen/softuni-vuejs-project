@@ -1,4 +1,30 @@
-<script></script>
+<script>
+import { mapActions } from "pinia";
+import { loginUser } from "../dataProviders/auth";
+import { useUserStore } from "../store/userStore";
+
+export default {
+  data() {
+    return {
+      userData: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useUserStore, ["setProfile"]),
+
+    async onSubmit() {
+      const userData = await loginUser(this.userData);
+      if (userData) {
+        this.setProfile(userData);
+        this.$router.push("/all-cars");
+      }
+    },
+  },
+};
+</script>
 
 <template>
   <div class="loginContainer">
@@ -7,9 +33,19 @@
         <h2>LOGIN</h2>
         <p>Glad to see you back! Please log-in to your account.</p>
       </div>
-      <form>
-        <input type="email" name="email" placeholder="Email Address" />
-        <input type="password" name="password" placeholder="Password" />
+      <form @submit.prevent="onSubmit">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          v-model="userData.email"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          v-model="userData.password"
+        />
         <button type="submit">Login</button>
       </form>
       <div class="formLink">

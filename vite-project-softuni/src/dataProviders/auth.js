@@ -9,3 +9,13 @@ export async function registerUser(userData) {
     return null;
   }
 }
+
+export async function loginUser(userData) {
+  try {
+    const res = await axios.post(`${apiUrl}/users/login`, userData);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
