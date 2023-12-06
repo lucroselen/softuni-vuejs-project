@@ -1,4 +1,25 @@
-<script></script>
+<script>
+import { mapActions, mapState } from "pinia";
+import { useUserStore } from "../store/userStore";
+
+export default {
+  setup() {
+    const userStore = useUserStore();
+    return { userStore };
+  },
+  computed: {
+    ...mapState(useUserStore, ["profile"]),
+  },
+  methods: {
+    ...mapActions(useUserStore, ["logout"]),
+
+    async handleLogout() {
+      this.logout();
+      this.$router.push("user/login");
+    },
+  },
+};
+</script>
 
 <template>
   <header>
@@ -17,27 +38,27 @@
         <li>
           <router-link to="/find-us"> Find Us </router-link>
         </li>
-        <li>
+        <li v-if="profile">
           <router-link to="/user/profile"> My Profile </router-link>
         </li>
-        <li>
+        <li v-if="profile">
           <router-link to="/add"> Add a Car </router-link>
         </li>
-        <li>
-          <a href="javascript:void(0);"> Logout </a>
+        <li v-if="profile">
+          <a @click="handleLogout" href="javascript:void(0);"> Logout </a>
         </li>
 
-        <li>
+        <li v-if="!profile">
           <router-link to="/user/login"> Login </router-link>
         </li>
-        <li>
+        <li v-if="!profile">
           <router-link to="/user/register"> Register </router-link>
         </li>
       </ul>
     </nav>
-    <div class="welcome">
+    <div class="welcome" v-if="profile">
       <span>Welcome, </span>
-      <router-link to="/user/profile"> FIRST_NAME LAST_NAME </router-link>
+      <router-link to="/user/profile"> {{ profile.user }} </router-link>
     </div>
   </header>
 </template>
