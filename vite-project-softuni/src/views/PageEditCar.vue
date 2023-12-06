@@ -1,4 +1,4 @@
-<script setup></script>
+<script></script>
 
 <template>
   <section id="editCar" class="fix">
