@@ -1,6 +1,6 @@
 <script>
-import PageFooter from "./components/PageFooter.vue";
-import PageHeader from "./components/PageHeader.vue";
+import PageFooter from "./views/PageFooter.vue";
+import PageHeader from "./views/PageHeader.vue";
 
 export default {
   components: {

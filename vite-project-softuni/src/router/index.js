@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import PageHome from "../components/PageHome.vue";
-import PageLogin from "../components/PageLogin.vue";
-import PageRegister from "../components/PageRegister.vue";
-import PageNotFound from "../components/PageNotFound.vue";
-import PageUserProfile from "../components/PageUserProfile.vue";
-import PageAddCar from "../components/PageAddCar.vue";
-import PageEditCar from "../components/PageEditCar.vue";
-import PageFindUs from "../components/PageFindUs.vue";
+import PageHome from "../views/PageHome.vue";
+import PageLogin from "../views/PageLogin.vue";
+import PageRegister from "../views/PageRegister.vue";
+import PageNotFound from "../views/PageNotFound.vue";
+import PageUserProfile from "../views/PageUserProfile.vue";
+import PageAddCar from "../views/PageAddCar.vue";
+import PageEditCar from "../views/PageEditCar.vue";
+import PageFindUs from "../views/PageFindUs.vue";
 
 const routes = [
   {
