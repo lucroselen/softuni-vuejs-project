@@ -1,4 +1,33 @@
-<script></script>
+<script>
+import { mapActions } from "pinia";
+import { registerUser } from "../dataProviders/auth";
+import { useUserStore } from "../store/userStore";
+
+export default {
+  data() {
+    return {
+      userData: {
+        firstName: "",
+        lastName: "",
+        password: "",
+        rePassword: "",
+        email: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useUserStore, ["setProfile"]),
+
+    async onSubmit() {
+      const userData = await registerUser(this.userData);
+      if (userData) {
+        this.setProfile(userData);
+        this.$router.push("/all-cars");
+      }
+    },
+  },
+};
+</script>
 
 <template>
   <div class="registerContainer">
@@ -7,12 +36,33 @@
         <h2>REGISTER</h2>
         <p>Let's get you on board!</p>
       </div>
-      <form>
-        <input type="text" name="firstName" placeholder="First Name" />
-        <input type="text" name="lastName" placeholder="Last Name" />
-        <input type="email" name="email" placeholder="Email Address" />
-        <input type="password" name="password" placeholder="Password" />
+      <form @submit.prevent="onSubmit">
         <input
+          v-model="userData.firstName"
+          type="text"
+          name="firstName"
+          placeholder="First Name"
+        />
+        <input
+          v-model="userData.lastName"
+          type="text"
+          name="lastName"
+          placeholder="Last Name"
+        />
+        <input
+          v-model="userData.email"
+          type="email"
+          name="email"
+          placeholder="Email Address"
+        />
+        <input
+          v-model="userData.password"
+          type="password"
+          name="password"
+          placeholder="Password"
+        />
+        <input
+          v-model="userData.rePassword"
           type="password"
           name="rePassword"
           placeholder="Repeat Password"
