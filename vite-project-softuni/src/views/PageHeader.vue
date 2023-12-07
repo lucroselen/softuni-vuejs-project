@@ -50,7 +50,7 @@ export default {
           </a>
         </li>
 
-        <li v-if="!isAuthenticated">
+        <li class="auth" v-if="!isAuthenticated">
           <router-link to="/user/login"> Login </router-link>
         </li>
         <li v-if="!isAuthenticated">
@@ -66,13 +66,16 @@ export default {
 </template>
 
 <style scoped>
+.auth {
+  margin-left: 26rem;
+}
 header {
   display: flex;
   position: fixed;
   top: 0;
   z-index: 1;
   width: 100%;
-  gap: 1rem;
+  gap: 2rem;
   align-items: center;
   justify-content: space-around;
   background: #212529;
