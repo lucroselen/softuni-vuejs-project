@@ -8,7 +8,7 @@ export default {
     return { userStore };
   },
   computed: {
-    ...mapState(useUserStore, ["profile"]),
+    ...mapState(useUserStore, ["isAuthenticated", "profile"]),
   },
   methods: {
     ...mapActions(useUserStore, ["logout"]),
@@ -38,25 +38,27 @@ export default {
         <li>
           <router-link to="/find-us"> Find Us </router-link>
         </li>
-        <li v-if="profile">
+        <li v-if="isAuthenticated">
           <router-link to="/user/profile"> My Profile </router-link>
         </li>
-        <li v-if="profile">
+        <li v-if="isAuthenticated">
           <router-link to="/add"> Add a Car </router-link>
         </li>
-        <li v-if="profile">
-          <a @click="handleLogout" href="javascript:void(0);"> Logout </a>
+        <li v-if="isAuthenticated">
+          <a @click.prevent="handleLogout" href="javascript:void(0);">
+            Logout
+          </a>
         </li>
 
-        <li v-if="!profile">
+        <li v-if="!isAuthenticated">
           <router-link to="/user/login"> Login </router-link>
         </li>
-        <li v-if="!profile">
+        <li v-if="!isAuthenticated">
           <router-link to="/user/register"> Register </router-link>
         </li>
       </ul>
     </nav>
-    <div class="welcome" v-if="profile">
+    <div class="welcome" v-if="isAuthenticated">
       <span>Welcome, </span>
       <router-link to="/user/profile"> {{ profile.user }} </router-link>
     </div>
