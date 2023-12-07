@@ -1,4 +1,17 @@
-<script></script>
+<script>
+import { mapState } from "pinia";
+import { useUserStore } from "../store/userStore";
+
+export default {
+  setup() {
+    const userStore = useUserStore();
+    return { userStore };
+  },
+  computed: {
+    ...mapState(useUserStore, ["isAuthenticated"]),
+  },
+};
+</script>
 
 <template>
   <div>
@@ -6,7 +19,9 @@
       <div class="home-container">
         <h1>Welcome to CARS EU</h1>
         <h2>Here you could find your dream car!</h2>
-        <router-link to="user/login" class="btn-get-started"
+        <router-link
+          :to="!isAuthenticated ? 'user/login' : '/all-cars'"
+          class="btn-get-started"
           >Get Started</router-link
         >
       </div>
