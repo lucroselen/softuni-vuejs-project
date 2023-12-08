@@ -7,6 +7,10 @@
   "prettier.enable": false,
   "editor.formatOnSave": false,
 
+  // Path Intellisense
+  "typescript.suggest.paths": false,
+  "javascript.suggest.paths": false,
+
   // Auto fix
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
