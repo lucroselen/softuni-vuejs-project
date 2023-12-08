@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import { logoutUser } from "../dataProviders/auth";
 import { useUserStore } from "../store/userStore";
 
 export default {
@@ -15,6 +16,7 @@ export default {
 
     async handleLogout() {
       this.logout();
+      logoutUser();
       this.$router.push("user/login");
     },
   },

@@ -16,7 +16,7 @@ export default {
     ...mapActions(useUserStore, ["setProfile"]),
 
     async onSubmit() {
-      const userData = await loginUser(this.userData);
+      const userData = await loginUser(this.userData, "login");
       if (userData) {
         this.setProfile(userData);
         this.$router.push("/all-cars");

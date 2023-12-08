@@ -1,8 +1,8 @@
-import axios from "axios";
-const apiUrl = "http://localhost:5000";
-export async function registerUser(userData) {
+import axiosInstance from "../configs/axios";
+
+export async function loginUser(userData, type) {
   try {
-    const res = await axios.post(`${apiUrl}/users/register`, userData);
+    const res = await axiosInstance.post(`/users/${type}`, userData);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -10,9 +10,9 @@ export async function registerUser(userData) {
   }
 }
 
-export async function loginUser(userData) {
+export async function logoutUser() {
   try {
-    const res = await axios.post(`${apiUrl}/users/login`, userData);
+    const res = await axiosInstance.get(`/users/logout`);
     return res.data;
   } catch (error) {
     console.log(error);

@@ -1,6 +1,6 @@
 <script>
 import { mapActions } from "pinia";
-import { registerUser } from "../dataProviders/auth";
+import { loginUser } from "../dataProviders/auth";
 import { useUserStore } from "../store/userStore";
 
 export default {
@@ -19,7 +19,7 @@ export default {
     ...mapActions(useUserStore, ["setProfile"]),
 
     async onSubmit() {
-      const userData = await registerUser(this.userData);
+      const userData = await loginUser(this.userData, "register");
       if (userData) {
         this.setProfile(userData);
         this.$router.push("/all-cars");
