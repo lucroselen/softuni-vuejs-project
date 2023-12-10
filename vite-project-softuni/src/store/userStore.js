@@ -11,11 +11,11 @@ export const useUserStore = defineStore("user", {
     setProfile(profileData) {
       this.profile = profileData;
       this.isAuthenticated = true;
-      sessionStorage.setItem("user-profile", JSON.stringify(profileData));
+      localStorage.setItem("user-profile", JSON.stringify(profileData));
     },
 
     getPersistedProfile() {
-      const persisted = sessionStorage.getItem("user-profile");
+      const persisted = localStorage.getItem("user-profile");
       if (!persisted) return;
       this.profile = JSON.parse(persisted);
       this.isAuthenticated = true;
@@ -23,7 +23,7 @@ export const useUserStore = defineStore("user", {
     logout() {
       this.isAuthenticated = false;
       this.profile = null;
-      sessionStorage.removeItem("user-profile");
+      localStorage.removeItem("user-profile");
     },
   },
 });
