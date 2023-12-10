@@ -9,3 +9,13 @@ export async function getCars(type) {
     return null;
   }
 }
+
+export async function addCar(carData) {
+  try {
+    const res = await axiosInstance.post("/add", carData);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

@@ -5,6 +5,7 @@ export const useUserStore = defineStore("user", {
     return {
       isAuthenticated: false,
       profile: null,
+      id: null,
     };
   },
   actions: {
@@ -12,6 +13,7 @@ export const useUserStore = defineStore("user", {
       this.profile = profileData;
       this.isAuthenticated = true;
       localStorage.setItem("user-profile", JSON.stringify(profileData));
+      this.id = JSON.parse(localStorage.getItem("user-profile")).id;
     },
 
     getPersistedProfile() {

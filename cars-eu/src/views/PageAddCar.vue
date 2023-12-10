@@ -1,13 +1,49 @@
-<script></script>
+<script>
+import { mapState } from "pinia";
+import { useUserStore } from "../store/userStore";
+import { addCar } from "../dataProviders/cars";
+
+export default {
+  setup() {
+    const userStore = useUserStore();
+    return { userStore };
+  },
+  data() {
+    return {
+      carData: {
+        brand: "",
+        model: "",
+        imgUrl: "",
+        fuelType: "",
+        year: "",
+        description: "",
+        mileage: "",
+        price: "",
+        creator: this.userStore.id,
+      },
+    };
+  },
+  methods: {
+    async onSubmit() {
+      await addCar(this.carData);
+      this.$router.push("/all-cars");
+    },
+  },
+  computed: {
+    ...mapState(useUserStore, ["id"]),
+  },
+};
+</script>
 
 <template>
   <section id="addCar" class="fix">
-    <div class="container">
+    <form @submit.prevent="onSubmit" class="container">
       <h3>Add a Car</h3>
       <div class="brand-model">
         <div class="form-group">
           <label for="brand"> Brand </label>
           <input
+            v-model="carData.brand"
             type="text"
             id="brand"
             class="form-control"
@@ -18,6 +54,7 @@
         <div class="form-group">
           <label for="model"> Model </label>
           <input
+            v-model="carData.model"
             type="text"
             id="model"
             name="model"
@@ -28,14 +65,16 @@
       </div>
       <label for="imgUrl"> Car Image </label>
       <input
+        v-model="carData.imgUrl"
         type="text"
         class="form-control"
         id="imgUrl"
         name="imgUrl"
         placeholder="https://..."
       />
-      <label for="isbn"> Fuel Type </label>
+      <label for="fuelType"> Fuel Type </label>
       <input
+        v-model="carData.fuelType"
         type="text"
         id="fuelType"
         name="fuelType"
@@ -44,6 +83,7 @@
       />
       <label for="year"> Year </label>
       <input
+        v-model="carData.year"
         type="number"
         min="1960"
         max="2024"
@@ -55,6 +95,7 @@
       />
       <label for="description"> Description </label>
       <textarea
+        v-model="carData.description"
         class="form-control"
         id="description"
         rows="3"
@@ -63,6 +104,7 @@
       ></textarea>
       <label for="mileage"> Mileage (in KM) </label>
       <input
+        v-model="carData.mileage"
         type="number"
         step="100"
         min="0"
@@ -74,6 +116,7 @@
       />
       <label for="price"> Price (in BGN) </label>
       <input
+        v-model="carData.price"
         type="number"
         step="100"
         min="0"
@@ -84,7 +127,7 @@
         placeholder="Example: 30 000"
       />
       <input class="btn" type="submit" defaultValue="Submit" />
-    </div>
+    </form>
   </section>
 </template>
 
