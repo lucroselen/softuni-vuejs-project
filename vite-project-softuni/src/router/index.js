@@ -7,11 +7,20 @@ import PageUserProfile from "../views/PageUserProfile.vue";
 import PageAddCar from "../views/PageAddCar.vue";
 import PageEditCar from "../views/PageEditCar.vue";
 import PageFindUs from "../views/PageFindUs.vue";
+import PageCars from "../views/PageCars.vue";
 
 const routes = [
   {
     path: "/",
     component: PageHome,
+  },
+  {
+    path: "/all-cars",
+    component: PageCars,
+  },
+  {
+    path: "/top-10",
+    component: PageCars,
   },
   {
     path: "/add",
