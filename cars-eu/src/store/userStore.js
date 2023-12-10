@@ -21,10 +21,12 @@ export const useUserStore = defineStore("user", {
       if (!persisted) return;
       this.profile = JSON.parse(persisted);
       this.isAuthenticated = true;
+      this.id = JSON.parse(localStorage.getItem("user-profile")).id;
     },
     logout() {
       this.isAuthenticated = false;
       this.profile = null;
+      this.id = null;
       localStorage.removeItem("user-profile");
     },
   },
