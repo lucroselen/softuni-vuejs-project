@@ -21,6 +21,7 @@ export default {
   },
   methods: {
     async loadData() {
+      this.isLoading = true;
       this.allCars = await getCars(window.location.href.split("/").pop());
       this.allCars.cars.forEach((e) => (e.stars = starsGenerator(e.rating)));
       this.isLoading = false;
