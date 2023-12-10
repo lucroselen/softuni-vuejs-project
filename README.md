@@ -1,4 +1,5 @@
-CARS EU
+# CARS EU
+
 Student application for SoftUni's VueJS course (Project Assignment).
 
 Back-end developed: NodeJS, Express, MongoDB (Mongoose)
