@@ -1,4 +1,10 @@
-<script></script>
+<script>
+export default {
+  created() {
+    this.$router.push("/404");
+  },
+};
+</script>
 
 <template>
   <div>
