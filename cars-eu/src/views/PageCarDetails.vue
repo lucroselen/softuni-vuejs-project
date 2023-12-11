@@ -72,7 +72,9 @@ export default {
               </button>
             </div>
             <div class="project-info-box mybuttons">
-              <router-link class="dark-btn" to="/edit">Edit</router-link>
+              <router-link class="dark-btn" :to="`/edit/${carData.car._id}`"
+                >Edit</router-link
+              >
               <button class="danger-btn" onclick="handleDelete()">
                 Delete
               </button>

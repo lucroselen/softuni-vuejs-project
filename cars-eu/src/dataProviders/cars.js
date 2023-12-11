@@ -28,3 +28,13 @@ export async function addCar(carData) {
     return null;
   }
 }
+
+export async function editCar(carData, id) {
+  try {
+    const res = await axiosInstance.post(`/edit/${id}`, carData);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

@@ -32,7 +32,7 @@ const routes = [
     component: PageFindUs,
   },
   {
-    path: "/edit",
+    path: "/edit/:id",
     component: PageEditCar,
   },
   {
