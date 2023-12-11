@@ -1,7 +1,42 @@
-<script></script>
+<script>
+import { getCar } from "../dataProviders/cars";
+import Loader from "../components/Loader.vue";
+import starsGenerator from "../helpers/starsGenerator";
+
+export default {
+  components: { Loader },
+  data() {
+    return {
+      carData: {},
+      isLoading: true,
+    };
+  },
+  async created() {
+    await this.loadData();
+  },
+  watch: {
+    $route() {
+      this.loadData();
+    },
+  },
+  methods: {
+    async loadData() {
+      this.isLoading = true;
+      this.carData = await getCar(this.$route.params.id);
+      this.isLoading = false;
+    },
+  },
+  computed: {
+    calculateStars() {
+      return starsGenerator(this.carData.car.rating);
+    },
+  },
+};
+</script>
 
 <template>
-  <body>
+  <Loader v-if="isLoading"></Loader>
+  <body v-else>
     <div class="container">
       <div class="row-container">
         <div class="row">
@@ -9,19 +44,25 @@
             <div class="project-info-box">
               <h2><b>Car Details</b></h2>
               <p id="carDescription">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                {{ carData.car.description }}
               </p>
             </div>
             <div class="project-info-box" id="carInfo">
-              <p><b>Brand:</b> Toyota</p>
-              <p><b>Model:</b> Camry</p>
-              <p><b>Year:</b> 2022</p>
-              <p><b>Fuel Type:</b> Gasoline</p>
-              <p><b>Mileage:</b> 10,000 KM</p>
-              <p><b>Added by:</b> John Doe (contact for a deal)</p>
-              <p><b>Price:</b> $20,000</p>
+              <p><b>Brand:</b> {{ carData.car.brand }}</p>
+              <p><b>Model:</b> {{ carData.car.model }}</p>
+              <p><b>Year:</b> {{ carData.car.year }}</p>
+              <p><b>Fuel Type:</b> {{ carData.car.fuelType }}</p>
+              <p><b>Mileage:</b> {{ carData.car.mileage }} KM</p>
               <p>
-                <b>Current car rating: </b><b style="color: orange">4 stars</b>
+                <b>Added by:</b> {{ carData.car.creator.firstName }}
+                {{ carData.car.creator.lastName }} (contact for a deal)
+              </p>
+              <p><b>Price:</b> {{ carData.car.price }} BGN</p>
+              <p>
+                <b>Current car rating: </b
+                ><b style="color: orange"
+                  >{{ carData.car.rating }} {{ calculateStars }}</b
+                >
               </p>
             </div>
             <div class="project-info-box mybuttons">
@@ -40,11 +81,13 @@
         </div>
         <div class="row img">
           <div class="flex-container">
-            <img
-              src="https://mediacloud.carbuyer.co.uk/image/private/s--rPzinXEn--/v1579656510/carbuyer/2019/09/01_47.jpg"
-              alt="project-pic"
-              class="rounded"
-            />
+            <div class="image-container">
+              <img
+                :src="carData.car.imgUrl"
+                alt="project-pic"
+                class="rounded"
+              />
+            </div>
             <div id="wrapper">
               <form id="commentForm">
                 <textarea
@@ -56,7 +99,7 @@
                 <input class="comment-btn" type="submit" value="Add Comment" />
               </form>
             </div>
-            <div class="project-info-box" id="commentsSection">
+            <div class="project-comment-box" id="commentsSection">
               <h2 class="commentTitle">Comments:</h2>
               <p class="comment">Lorem ipsum comment 1.</p>
               <p class="comment">Lorem ipsum comment 2.</p>
@@ -102,7 +145,6 @@ h2 {
 
 .img {
   padding-top: 0.65rem;
-  width: 913px;
 }
 
 .flex-container {
@@ -115,15 +157,28 @@ h2 {
   background-color: #fff;
   padding: 30px 40px;
   border-radius: 5px;
+  max-width: 400px;
+  word-wrap: break-word;
 }
 
-.project-info-box p {
+.project-comment-box {
+  margin: 10px 0;
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 5px;
+  max-width: 1000px;
+  word-wrap: break-word;
+}
+
+.project-info-box p,
+.project-comment-box p {
   margin-bottom: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid #d5dadb;
 }
 
-.project-info-box p:last-child {
+.project-info-box p:last-child,
+.project-comment-box p:last-child {
   margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
@@ -144,12 +199,21 @@ h2 {
   margin-top: -1rem;
 }
 
-img {
-  object-fit: cover;
-}
-
 #commentForm {
   margin-top: 20px;
+}
+
+.image-container {
+  width: 100%;
+  height: 609px;
+  overflow: hidden;
+  min-width: 1000px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 textarea {
