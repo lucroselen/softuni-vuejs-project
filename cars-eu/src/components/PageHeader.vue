@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import { logoutUser } from "../dataProviders/auth";
+import { logoutUser, getProfile } from "../dataProviders/auth";
 import { useUserStore } from "../store/userStore";
 
 export default {
@@ -8,12 +8,24 @@ export default {
     const userStore = useUserStore();
     return { userStore };
   },
+  data() {
+    return {
+      profile: {},
+    };
+  },
+  async created() {
+    await this.loadData();
+  },
+
   computed: {
-    ...mapState(useUserStore, ["isAuthenticated", "profile"]),
+    ...mapState(useUserStore, ["isAuthenticated", "id"]),
   },
   methods: {
     ...mapActions(useUserStore, ["logout"]),
 
+    async loadData() {
+      this.profile = await getProfile();
+    },
     async handleLogout() {
       this.logout();
       await logoutUser();
@@ -62,7 +74,9 @@ export default {
     </nav>
     <div class="welcome" v-if="isAuthenticated">
       <span>Welcome, </span>
-      <router-link to="/user/profile"> {{ profile.user }} </router-link>
+      <router-link to="/user/profile">
+        {{ profile.firstName }} {{ profile.lastName }}
+      </router-link>
     </div>
   </header>
 </template>

@@ -22,7 +22,7 @@ export async function logoutUser() {
 
 export async function getProfile() {
   try {
-    const id = JSON.parse(localStorage.getItem("user-profile")).id;
+    const id = localStorage.getItem("id");
     const res = await axiosInstance.get(`/users/profile/${id}`);
     return res.data;
   } catch (error) {

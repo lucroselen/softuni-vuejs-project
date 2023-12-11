@@ -4,30 +4,27 @@ export const useUserStore = defineStore("user", {
   state: () => {
     return {
       isAuthenticated: false,
-      profile: null,
       id: null,
     };
   },
   actions: {
-    setProfile(profileData) {
-      this.profile = profileData;
+    setProfile(id) {
+      this.id = id;
       this.isAuthenticated = true;
-      localStorage.setItem("user-profile", JSON.stringify(profileData));
-      this.id = JSON.parse(localStorage.getItem("user-profile")).id;
+      localStorage.setItem("id", id);
     },
 
     getPersistedProfile() {
-      const persisted = localStorage.getItem("user-profile");
+      const persisted = localStorage.getItem("id");
       if (!persisted) return;
-      this.profile = JSON.parse(persisted);
+      this.id = localStorage.getItem("id");
       this.isAuthenticated = true;
-      this.id = JSON.parse(localStorage.getItem("user-profile")).id;
     },
     logout() {
       this.isAuthenticated = false;
       this.profile = null;
       this.id = null;
-      localStorage.removeItem("user-profile");
+      localStorage.removeItem("id");
     },
   },
 });
