@@ -13,12 +13,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: linear-gradient(
-    to left,
-    #2d2d70,
-    #47334e,
-    #3e577a,
-    #056b80,
-    #068f83
+  background-image: linear-gradient(
+    to left bottom,
+    rgb(141, 122, 85),
+    rgb(77, 90, 108),
+    rgb(29, 52, 128)
   );
 }

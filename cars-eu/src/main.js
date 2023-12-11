@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import "./styles/reset.css";
-import "./style.css";
+import "./styles/style.css";
 import App from "./App.vue";
 import router from "./router";
 import VueGoogleMaps from "@fawmi/vue-google-maps";
