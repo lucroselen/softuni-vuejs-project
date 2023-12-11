@@ -132,7 +132,9 @@ h2 {
 .rounded {
   border-radius: 5px;
 }
-
+.comment {
+  font-weight: bold;
+}
 .comment:not(:last-child) {
   margin-bottom: 1rem;
 }
