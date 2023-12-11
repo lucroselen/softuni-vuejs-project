@@ -10,21 +10,27 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       profile: {},
     };
   },
+  mounted() {
+    this.$emit("is-loading", this.isLoading);
+  },
   async created() {
     await this.loadData();
+    this.$emit("is-loading", this.isLoading);
   },
-
+  emits: ["is-loading"],
   computed: {
     ...mapState(useUserStore, ["isAuthenticated", "id"]),
   },
   methods: {
     ...mapActions(useUserStore, ["logout"]),
-
     async loadData() {
+      this.isLoading = true;
       this.profile = await getProfile();
+      this.isLoading = false;
     },
     async handleLogout() {
       this.logout();
@@ -74,9 +80,10 @@ export default {
     </nav>
     <div class="welcome" v-if="isAuthenticated">
       <span>Welcome, </span>
-      <router-link to="/user/profile">
+      <router-link to="/user/profile" v-if="!isLoading">
         {{ profile.firstName }} {{ profile.lastName }}
       </router-link>
+      <span v-else>. . .</span>
     </div>
   </header>
 </template>
