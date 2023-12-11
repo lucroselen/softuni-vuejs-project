@@ -50,7 +50,7 @@ export default {
         <p>
           {{ car["description"] }}
         </p>
-        <router-link to="/details">Details</router-link>
+        <router-link :to="`/details/${car['_id']}`">Details</router-link>
       </div>
       <div class="carImage">
         <img :src="car['imgUrl']" alt="car-image" />

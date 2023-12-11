@@ -8,6 +8,7 @@ import PageAddCar from "../views/PageAddCar.vue";
 import PageEditCar from "../views/PageEditCar.vue";
 import PageFindUs from "../views/PageFindUs.vue";
 import PageCars from "../views/PageCars.vue";
+import PageCarDetails from "../views/PageCarDetails.vue";
 
 const routes = [
   {
@@ -33,6 +34,10 @@ const routes = [
   {
     path: "/edit",
     component: PageEditCar,
+  },
+  {
+    path: "/details/:id",
+    component: PageCarDetails,
   },
   {
     path: "/user/login",
