@@ -8,9 +8,15 @@ import {
 } from "../dataProviders/cars";
 import Loader from "../components/Loader.vue";
 import starsGenerator from "../helpers/starsGenerator";
+import { useUserStore } from "../store/userStore";
+import { mapState } from "pinia";
 
 export default {
   components: { Loader },
+  setup() {
+    const userStore = useUserStore();
+    return { userStore };
+  },
   data() {
     return {
       carData: {},
@@ -50,6 +56,7 @@ export default {
     },
   },
   computed: {
+    ...mapState(useUserStore, ["isAuthenticated"]),
     calculateStars() {
       return starsGenerator(this.carData.car.rating);
     },
@@ -88,20 +95,36 @@ export default {
                 >
               </p>
             </div>
-            <div class="project-info-box mybuttons">
-              <button class="success-btn" @click="likeCar">Like</button>
-              <button class="warning-btn" @click="dislikeCar">Dislike</button>
+            <div v-if="isAuthenticated">
+              <div class="project-info-box mybuttons">
+                <button class="success-btn" @click="likeCar">Like</button>
+                <button class="warning-btn" @click="dislikeCar">Dislike</button>
+              </div>
+              <div class="project-info-box mybuttons">
+                <button class="fav-btn" @click="favoriteCar">
+                  Add to Favorites
+                </button>
+              </div>
+              <div class="project-info-box mybuttons">
+                <router-link class="dark-btn" :to="`/edit/${carData.car._id}`"
+                  >Edit</router-link
+                >
+                <button class="danger-btn" @click="deleteCar">Delete</button>
+              </div>
             </div>
-            <div class="project-info-box mybuttons">
-              <button class="fav-btn" @click="favoriteCar">
-                Add to Favorites
-              </button>
-            </div>
-            <div class="project-info-box mybuttons">
-              <router-link class="dark-btn" :to="`/edit/${carData.car._id}`"
-                >Edit</router-link
-              >
-              <button class="danger-btn" @click="deleteCar">Delete</button>
+            <div v-else class="project-info-box">
+              <p>
+                <b>
+                  <router-link class="linktext" to="/user/login"
+                    >Log-in</router-link
+                  >
+                  or
+                  <router-link class="linktext" to="/user/register"
+                    >register</router-link
+                  >
+                  to edit, rate or comment this car!
+                </b>
+              </p>
             </div>
           </div>
         </div>
@@ -114,7 +137,7 @@ export default {
                 class="rounded"
               />
             </div>
-            <div id="wrapper">
+            <div id="wrapper" v-if="isAuthenticated">
               <form id="commentForm">
                 <textarea
                   id="comment"
@@ -186,7 +209,9 @@ h2 {
   max-width: 400px;
   word-wrap: break-word;
 }
-
+.linktext {
+  color: black;
+}
 .project-comment-box {
   margin: 10px 0;
   background-color: #fff;
