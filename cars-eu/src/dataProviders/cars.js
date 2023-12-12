@@ -68,3 +68,13 @@ export async function dislikeCar(id) {
     return null;
   }
 }
+
+export async function favoriteCar(id) {
+  try {
+    const res = await axiosInstance.get(`/favorite/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

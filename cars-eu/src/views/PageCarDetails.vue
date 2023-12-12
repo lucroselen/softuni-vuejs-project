@@ -1,5 +1,11 @@
 <script>
-import { getCar, deleteCar, likeCar, dislikeCar } from "../dataProviders/cars";
+import {
+  getCar,
+  deleteCar,
+  likeCar,
+  dislikeCar,
+  favoriteCar,
+} from "../dataProviders/cars";
 import Loader from "../components/Loader.vue";
 import starsGenerator from "../helpers/starsGenerator";
 
@@ -38,6 +44,9 @@ export default {
     async dislikeCar() {
       await dislikeCar(this.carData.car._id);
       this.carData.car.rating--;
+    },
+    async favoriteCar() {
+      await favoriteCar(this.carData.car._id);
     },
   },
   computed: {
@@ -82,6 +91,11 @@ export default {
             <div class="project-info-box mybuttons">
               <button class="success-btn" @click="likeCar">Like</button>
               <button class="warning-btn" @click="dislikeCar">Dislike</button>
+            </div>
+            <div class="project-info-box mybuttons">
+              <button class="fav-btn" @click="favoriteCar">
+                Add to Favorites
+              </button>
             </div>
             <div class="project-info-box mybuttons">
               <router-link class="dark-btn" :to="`/edit/${carData.car._id}`"
@@ -282,6 +296,21 @@ button,
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.fav-btn {
+  background: linear-gradient(
+    90deg,
+    rgb(23, 0, 153) 0%,
+    rgb(81, 53, 0) 50%,
+    rgba(23, 0, 153) 100%
+  );
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .dark-btn {
