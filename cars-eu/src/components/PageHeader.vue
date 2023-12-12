@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import { logoutUser, getProfile } from "../dataProviders/auth";
+import { logoutUser } from "../dataProviders/auth";
 import { useUserStore } from "../store/userStore";
 
 export default {
@@ -8,30 +8,12 @@ export default {
     const userStore = useUserStore();
     return { userStore };
   },
-  data() {
-    return {
-      isLoading: false,
-      profile: {},
-    };
-  },
-  mounted() {
-    this.$emit("is-loading", this.isLoading);
-  },
-  async created() {
-    await this.loadData();
-    this.$emit("is-loading", this.isLoading);
-  },
-  emits: ["is-loading"],
   computed: {
-    ...mapState(useUserStore, ["isAuthenticated", "id"]),
+    ...mapState(useUserStore, ["isAuthenticated", "id", "email"]),
   },
   methods: {
     ...mapActions(useUserStore, ["logout"]),
-    async loadData() {
-      this.isLoading = true;
-      this.profile = await getProfile();
-      this.isLoading = false;
-    },
+
     async handleLogout() {
       this.logout();
       await logoutUser();
@@ -80,10 +62,9 @@ export default {
     </nav>
     <div class="welcome" v-if="isAuthenticated">
       <span>Welcome, </span>
-      <router-link to="/user/profile" v-if="!isLoading">
-        {{ profile.firstName }} {{ profile.lastName }}
+      <router-link to="/user/profile">
+        {{ email }}
       </router-link>
-      <span v-else>. . .</span>
     </div>
   </header>
 </template>
