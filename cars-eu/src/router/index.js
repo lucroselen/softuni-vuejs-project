@@ -9,6 +9,19 @@ import PageEditCar from "../views/PageEditCar.vue";
 import PageFindUs from "../views/PageFindUs.vue";
 import PageCars from "../views/PageCars.vue";
 import PageCarDetails from "../views/PageCarDetails.vue";
+import { useUserStore } from "../store/userStore";
+
+function validateUser() {
+  const userStore = useUserStore();
+  return userStore.isAuthenticated
+    ? userStore.isAuthenticated
+    : { path: "/user/login" };
+}
+
+function isLoggedIn() {
+  const userStore = useUserStore();
+  return userStore.isAuthenticated ? { path: "/user/profile" } : true;
+}
 
 const routes = [
   {
@@ -26,6 +39,7 @@ const routes = [
   {
     path: "/add",
     component: PageAddCar,
+    beforeEnter: validateUser,
   },
   {
     path: "/find-us",
@@ -34,6 +48,7 @@ const routes = [
   {
     path: "/edit/:id",
     component: PageEditCar,
+    beforeEnter: validateUser,
   },
   {
     path: "/details/:id",
@@ -42,14 +57,17 @@ const routes = [
   {
     path: "/user/login",
     component: PageLogin,
+    beforeEnter: isLoggedIn,
   },
   {
     path: "/user/register",
     component: PageRegister,
+    beforeEnter: isLoggedIn,
   },
   {
     path: "/user/profile",
     component: PageUserProfile,
+    beforeEnter: validateUser,
   },
   { path: "/:pathMatch(.*)*", component: PageNotFound },
 ];
