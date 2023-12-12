@@ -21,7 +21,7 @@ export default {
     async onSubmit() {
       const userData = await loginUser(this.userData, "register");
       if (userData) {
-        this.setProfile(userData.id);
+        this.setProfile(userData.id, userData.user);
         this.$router.push("/all-cars");
       }
     },
