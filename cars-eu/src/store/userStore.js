@@ -5,26 +5,32 @@ export const useUserStore = defineStore("user", {
     return {
       isAuthenticated: false,
       id: null,
+      email: null,
     };
   },
   actions: {
-    setProfile(id) {
+    setProfile(id, email) {
+      console.log(id, email);
       this.id = id;
+      this.email = email;
       this.isAuthenticated = true;
       localStorage.setItem("id", id);
+      localStorage.setItem("email", email);
     },
 
     getPersistedProfile() {
       const persisted = localStorage.getItem("id");
       if (!persisted) return;
       this.id = localStorage.getItem("id");
+      this.email = localStorage.getItem("email");
       this.isAuthenticated = true;
     },
     logout() {
       this.isAuthenticated = false;
-      this.profile = null;
+      this.email = null;
       this.id = null;
       localStorage.removeItem("id");
+      localStorage.removeItem("email");
     },
   },
 });
