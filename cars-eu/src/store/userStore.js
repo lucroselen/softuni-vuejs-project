@@ -10,7 +10,6 @@ export const useUserStore = defineStore("user", {
   },
   actions: {
     setProfile(id, email) {
-      console.log(id, email);
       this.id = id;
       this.email = email;
       this.isAuthenticated = true;
