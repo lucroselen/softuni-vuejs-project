@@ -38,3 +38,13 @@ export async function editCar(carData, id) {
     return null;
   }
 }
+
+export async function deleteCar(id) {
+  try {
+    const res = await axiosInstance.get(`/delete/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

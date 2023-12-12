@@ -1,5 +1,5 @@
 <script>
-import { getCar } from "../dataProviders/cars";
+import { getCar, deleteCar } from "../dataProviders/cars";
 import Loader from "../components/Loader.vue";
 import starsGenerator from "../helpers/starsGenerator";
 
@@ -24,6 +24,12 @@ export default {
       this.isLoading = true;
       this.carData = await getCar(this.$route.params.id);
       this.isLoading = false;
+    },
+    async deleteCar() {
+      this.isLoading = true;
+      await deleteCar(this.carData.car._id);
+      this.isLoading = false;
+      this.$router.push("/all-cars");
     },
   },
   computed: {
@@ -75,9 +81,7 @@ export default {
               <router-link class="dark-btn" :to="`/edit/${carData.car._id}`"
                 >Edit</router-link
               >
-              <button class="danger-btn" onclick="handleDelete()">
-                Delete
-              </button>
+              <button class="danger-btn" @click="deleteCar">Delete</button>
             </div>
           </div>
         </div>
