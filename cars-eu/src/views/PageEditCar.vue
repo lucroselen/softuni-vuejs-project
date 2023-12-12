@@ -35,7 +35,7 @@ export default {
     },
     async onSubmit() {
       await editCar(this.carData.car, this.carData.car._id);
-      this.$router.push("/all-cars");
+      this.$router.push(`/details/${this.carData.car._id}`);
     },
   },
 };
