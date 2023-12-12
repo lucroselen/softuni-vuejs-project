@@ -1,5 +1,5 @@
 <script>
-import { getCar, deleteCar } from "../dataProviders/cars";
+import { getCar, deleteCar, likeCar, dislikeCar } from "../dataProviders/cars";
 import Loader from "../components/Loader.vue";
 import starsGenerator from "../helpers/starsGenerator";
 
@@ -30,6 +30,14 @@ export default {
       await deleteCar(this.carData.car._id);
       this.isLoading = false;
       this.$router.push("/all-cars");
+    },
+    async likeCar() {
+      await likeCar(this.carData.car._id);
+      this.carData.car.rating++;
+    },
+    async dislikeCar() {
+      await dislikeCar(this.carData.car._id);
+      this.carData.car.rating--;
     },
   },
   computed: {
@@ -72,10 +80,8 @@ export default {
               </p>
             </div>
             <div class="project-info-box mybuttons">
-              <button class="success-btn" onclick="handleLike()">Like</button>
-              <button class="warning-btn" onclick="handleDislike()">
-                Dislike
-              </button>
+              <button class="success-btn" @click="likeCar">Like</button>
+              <button class="warning-btn" @click="dislikeCar">Dislike</button>
             </div>
             <div class="project-info-box mybuttons">
               <router-link class="dark-btn" :to="`/edit/${carData.car._id}`"

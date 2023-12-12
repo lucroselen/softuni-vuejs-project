@@ -48,3 +48,23 @@ export async function deleteCar(id) {
     return null;
   }
 }
+
+export async function likeCar(id) {
+  try {
+    const res = await axiosInstance.get(`/vote-up/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function dislikeCar(id) {
+  try {
+    const res = await axiosInstance.get(`/vote-down/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
