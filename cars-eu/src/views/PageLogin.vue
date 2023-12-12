@@ -117,7 +117,8 @@ export default {
 }
 
 .loginWrapper form input {
-  padding: 0.75rem 10rem 0.75rem 0.75rem;
+  padding: 0.75rem;
+  width: 20rem;
   border: unset;
   border-radius: 4px;
   margin: 0.2rem;
