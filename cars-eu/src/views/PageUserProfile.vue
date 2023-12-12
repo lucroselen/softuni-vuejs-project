@@ -38,7 +38,7 @@ export default {
       </div>
       <br />
 
-      <div class="favorite-cars">
+      <div class="favorite-cars" v-if="profile.favorites.length > 0">
         <h2>These are your favorite Cars:</h2>
         <br />
         <ul>
@@ -51,6 +51,20 @@ export default {
             /></router-link>
           </li>
         </ul>
+      </div>
+      <div v-else>
+        <h2>You have no cars in favorites yet.</h2>
+        <br />
+        <p>
+          Feel free to visit
+          <router-link to="/all-cars">All Cars</router-link> or
+          <router-link to="/top-10">Top 10 Cars</router-link>
+          where you can choose a car that you can add your favorites.
+        </p>
+        <p>
+          Please note that you cannot add the cars added by yourself to your
+          favorites.
+        </p>
       </div>
     </div>
   </div>
