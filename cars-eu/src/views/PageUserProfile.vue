@@ -12,6 +12,11 @@ export default {
   async created() {
     await this.loadData();
   },
+  watch: {
+    $route() {
+      this.loadData();
+    },
+  },
   methods: {
     async loadData() {
       this.isLoading = true;
@@ -37,98 +42,13 @@ export default {
         <h2>These are your favorite Cars:</h2>
         <br />
         <ul>
-          <li>
-            <h3>Toyota Corolla</h3>
+          <li v-for="car in profile.favorites" :key="car._id">
+            <h3>{{ car.brand }} {{ car.model }}</h3>
             <br />
 
-            <a href="https://www.example.com/car1"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 1"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
-          </li>
-          <li>
-            <h3>Toyota Corolla</h3>
-            <br />
-            <a href="https://www.example.com/car2"
-              ><img
-                src="https://cf-cdn-v5.audi.at/media/GalleryThumbnails_Slider_Image_Component/66694-673604-slider-413608/dh-1168-a9ad28/7e2aa426/1675153383/1920x1080-audi-rs-6-avant-my2021-1529-oe.jpg"
-                alt="Car 2"
-            /></a>
+            <router-link :to="`/details/${car._id}`"
+              ><img class="img" :src="car.imgUrl" alt="Car"
+            /></router-link>
           </li>
         </ul>
       </div>
@@ -167,18 +87,18 @@ export default {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   list-style-type: none;
 }
 
 .favorite-cars li {
   margin-bottom: 15px;
-  width: 18%; /* Adjust as needed for spacing */
+  width: 18%;
 }
 
-.favorite-cars img {
-  width: 100%;
-  height: auto;
+.img {
+  width: 600px;
+  height: 200px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
