@@ -46,13 +46,16 @@ export default {
     async likeCar() {
       await likeCar(this.carData.car._id);
       this.carData.car.rating++;
+      this.carData.voted = true;
     },
     async dislikeCar() {
       await dislikeCar(this.carData.car._id);
       this.carData.car.rating--;
+      this.carData.voted = true;
     },
     async favoriteCar() {
       await favoriteCar(this.carData.car._id);
+      this.carData.isInFavorites = true;
     },
   },
   computed: {
@@ -96,16 +99,34 @@ export default {
               </p>
             </div>
             <div v-if="isAuthenticated">
-              <div class="project-info-box mybuttons">
-                <button class="success-btn" @click="likeCar">Like</button>
-                <button class="warning-btn" @click="dislikeCar">Dislike</button>
+              <div class="project-info-box mybuttons" v-if="!carData.isOwnedBy">
+                <button
+                  class="success-btn"
+                  @click="likeCar"
+                  v-if="!carData.voted"
+                >
+                  Like
+                </button>
+                <button
+                  class="warning-btn"
+                  @click="dislikeCar"
+                  v-if="!carData.voted"
+                >
+                  Dislike
+                </button>
+                <h3 v-if="carData.voted">Thank you for voting on this car!</h3>
               </div>
-              <div class="project-info-box mybuttons">
-                <button class="fav-btn" @click="favoriteCar">
+              <div class="project-info-box mybuttons" v-if="!carData.isOwnedBy">
+                <button
+                  class="fav-btn"
+                  @click="favoriteCar"
+                  v-if="!carData.isInFavorites"
+                >
                   Add to Favorites
                 </button>
+                <h3 v-else>This car has been added to your favorites!</h3>
               </div>
-              <div class="project-info-box mybuttons">
+              <div class="project-info-box mybuttons" v-if="carData.isOwnedBy">
                 <router-link class="dark-btn" :to="`/edit/${carData.car._id}`"
                   >Edit</router-link
                 >
