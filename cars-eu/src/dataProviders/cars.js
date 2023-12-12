@@ -78,3 +78,14 @@ export async function favoriteCar(id) {
     return null;
   }
 }
+
+export async function comment(id, comment) {
+  console.log(comment);
+  try {
+    const res = await axiosInstance.post(`/comment/${id}`, comment);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

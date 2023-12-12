@@ -5,7 +5,9 @@ import {
   likeCar,
   dislikeCar,
   favoriteCar,
+  comment,
 } from "../dataProviders/cars";
+import { getProfile } from "../dataProviders/auth";
 import Loader from "../components/Loader.vue";
 import starsGenerator from "../helpers/starsGenerator";
 import { useUserStore } from "../store/userStore";
@@ -21,6 +23,7 @@ export default {
     return {
       carData: {},
       isLoading: true,
+      userData: { comment: "" },
     };
   },
   async created() {
@@ -56,6 +59,14 @@ export default {
     async favoriteCar() {
       await favoriteCar(this.carData.car._id);
       this.carData.isInFavorites = true;
+    },
+    async comment() {
+      await comment(this.carData.car._id, this.userData);
+      let user = await getProfile();
+      this.carData.car.comments.unshift(
+        `${user.firstName} ${user.lastName}: ${this.userData.comment}`
+      );
+      this.userData.comment = "";
     },
   },
   computed: {
@@ -159,20 +170,32 @@ export default {
               />
             </div>
             <div id="wrapper" v-if="isAuthenticated">
-              <form id="commentForm">
+              <form id="commentForm" @submit.prevent="comment">
                 <textarea
                   id="comment"
                   rows="3"
                   placeholder="Write a comment..."
+                  v-model="userData.comment"
                   required
                 ></textarea>
                 <input class="comment-btn" type="submit" value="Add Comment" />
               </form>
             </div>
-            <div class="project-comment-box" id="commentsSection">
+            <div
+              class="project-comment-box"
+              id="commentsSection"
+              v-if="carData.car.comments.length > 0"
+            >
               <h2 class="commentTitle">Comments:</h2>
-              <p class="comment">Lorem ipsum comment 1.</p>
-              <p class="comment">Lorem ipsum comment 2.</p>
+              <p class="comment" v-for="comment of carData.car.comments">
+                {{ comment }}
+              </p>
+            </div>
+            <div
+              v-if="carData.car.comments.length == 0"
+              class="project-comment-box"
+            >
+              <h3>Be the first to comment this car!</h3>
             </div>
           </div>
         </div>
@@ -280,6 +303,7 @@ h2 {
   height: 609px;
   overflow: hidden;
   min-width: 1000px;
+  max-width: 1000px;
 }
 
 .image-container img {
