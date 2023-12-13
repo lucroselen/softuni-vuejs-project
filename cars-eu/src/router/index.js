@@ -51,15 +51,17 @@ const routes = [
     component: PageFindUs,
   },
   {
-    path: "/edit/:id",
-    component: PageEditCar,
-    name: "EditCar",
-    beforeEnter: validateUser,
-  },
-  {
     path: "/details/:id",
     component: PageCarDetails,
     name: "CarDetails",
+    children: [
+      {
+        path: "edit",
+        component: PageEditCar,
+        name: "EditCar",
+        beforeEnter: validateUser,
+      },
+    ],
   },
   {
     path: "/user/login",

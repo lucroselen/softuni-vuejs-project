@@ -81,6 +81,7 @@ export default {
 <template>
   <Loader v-if="isLoading"></Loader>
   <body v-else>
+    <router-view></router-view>
     <div class="container">
       <div class="row-container">
         <div class="row">
@@ -138,7 +139,9 @@ export default {
                 <h3 v-else>This car has been added to your favorites!</h3>
               </div>
               <div class="project-info-box mybuttons" v-if="carData.isOwnedBy">
-                <router-link class="dark-btn" :to="`/edit/${carData.car._id}`"
+                <router-link
+                  class="dark-btn"
+                  :to="{ name: 'EditCar', params: { id: $route.params.id } }"
                   >Edit</router-link
                 >
                 <button class="danger-btn" @click="deleteCar">Delete</button>
