@@ -121,7 +121,7 @@ export default {
       <input
         v-model="carData.car.mileage"
         type="number"
-        step="100"
+        step="1"
         min="0"
         max="500000"
         class="form-control"
@@ -134,7 +134,7 @@ export default {
       <input
         v-model="carData.car.price"
         type="number"
-        step="100"
+        step="1"
         min="0"
         max="999999999999"
         class="form-control"
