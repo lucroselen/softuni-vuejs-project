@@ -41,7 +41,6 @@ export default {
           this.$router.push("/all-cars");
         }
         this.isLoading = false;
-        this.errorNotification = false;
       }
     },
   },
