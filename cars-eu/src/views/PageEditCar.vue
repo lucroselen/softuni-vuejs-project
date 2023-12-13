@@ -17,6 +17,7 @@ export default {
           creator: "",
         },
       },
+      isLoading: false,
     };
   },
   async created() {
@@ -34,7 +35,9 @@ export default {
       this.isLoading = false;
     },
     async onSubmit() {
+      this.isLoading = true;
       await editCar(this.carData.car, this.carData.car._id);
+      this.isLoading = false;
       this.$router.push(`/details/${this.carData.car._id}`);
     },
   },
@@ -55,6 +58,7 @@ export default {
             class="form-control"
             name="brand"
             placeholder="Example: Mercedes"
+            :disabled="isLoading"
           />
         </div>
         <div class="form-group">
@@ -66,6 +70,7 @@ export default {
             name="model"
             class="form-control"
             placeholder="Example: C 220"
+            :disabled="isLoading"
           />
         </div>
       </div>
@@ -77,6 +82,7 @@ export default {
         id="imgUrl"
         name="imgUrl"
         placeholder="https://..."
+        :disabled="isLoading"
       />
       <label for="isbn"> Fuel Type </label>
       <input
@@ -86,6 +92,7 @@ export default {
         name="fuelType"
         class="form-control"
         placeholder="Diesel, Gasoline, Hybrid..."
+        :disabled="isLoading"
       />
       <label for="year"> Year </label>
       <input
@@ -98,6 +105,7 @@ export default {
         name="year"
         class="form-control"
         placeholder="Example: 2016"
+        :disabled="isLoading"
       />
       <label for="description"> Description </label>
       <textarea
@@ -107,6 +115,7 @@ export default {
         rows="3"
         name="description"
         placeholder="A short description of the car..."
+        :disabled="isLoading"
       ></textarea>
       <label for="mileage"> Mileage (in KM) </label>
       <input
@@ -119,6 +128,7 @@ export default {
         id="mileage"
         name="mileage"
         placeholder="Example: 10 000"
+        :disabled="isLoading"
       />
       <label for="price"> Price (in BGN) </label>
       <input
@@ -131,8 +141,14 @@ export default {
         id="price"
         name="price"
         placeholder="Example: 30 000"
+        :disabled="isLoading"
       />
-      <input class="btn" type="submit" defaultValue="Edit" />
+      <input
+        class="btn"
+        type="submit"
+        :disabled="isLoading"
+        defaultValue="Edit"
+      />
     </form>
   </section>
 </template>

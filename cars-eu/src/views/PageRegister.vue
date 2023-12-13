@@ -13,17 +13,20 @@ export default {
         rePassword: "",
         email: "",
       },
+      isLoading: false,
     };
   },
   methods: {
     ...mapActions(useUserStore, ["setProfile"]),
 
     async onSubmit() {
+      this.isLoading = true;
       const userData = await loginUser(this.userData, "register");
       if (userData) {
         this.setProfile(userData.id, userData.user);
         this.$router.push("/all-cars");
       }
+      this.isLoading = false;
     },
   },
 };
@@ -42,32 +45,37 @@ export default {
           type="text"
           name="firstName"
           placeholder="First Name"
+          :disabled="isLoading"
         />
         <input
           v-model="userData.lastName"
           type="text"
           name="lastName"
           placeholder="Last Name"
+          :disabled="isLoading"
         />
         <input
           v-model="userData.email"
           type="email"
           name="email"
           placeholder="Email Address"
+          :disabled="isLoading"
         />
         <input
           v-model="userData.password"
           type="password"
           name="password"
           placeholder="Password"
+          :disabled="isLoading"
         />
         <input
           v-model="userData.rePassword"
           type="password"
           name="rePassword"
           placeholder="Repeat Password"
+          :disabled="isLoading"
         />
-        <button>Register</button>
+        <button :disabled="isLoading">Register</button>
       </form>
       <div class="formLink">
         <span>Already have an account?</span>

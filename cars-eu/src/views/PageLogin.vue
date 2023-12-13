@@ -10,17 +10,20 @@ export default {
         email: "",
         password: "",
       },
+      isLoading: false,
     };
   },
   methods: {
     ...mapActions(useUserStore, ["setProfile"]),
 
     async onSubmit() {
+      this.isLoading = true;
       const userData = await loginUser(this.userData, "login");
       if (userData) {
         this.setProfile(userData.id, userData.user);
         this.$router.push("/all-cars");
       }
+      this.isLoading = false;
     },
   },
 };
@@ -39,14 +42,16 @@ export default {
           name="email"
           placeholder="Email Address"
           v-model="userData.email"
+          :disabled="isLoading"
         />
         <input
           type="password"
           name="password"
           placeholder="Password"
           v-model="userData.password"
+          :disabled="isLoading"
         />
-        <button type="submit">Login</button>
+        <button :disabled="isLoading" type="submit">Login</button>
       </form>
       <div class="formLink">
         <span>Don't have an account?</span>
