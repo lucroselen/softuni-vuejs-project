@@ -27,49 +27,59 @@ const routes = [
   {
     path: "/",
     component: PageHome,
+    name: "Home",
   },
   {
     path: "/all-cars",
     component: PageCars,
+    name: "AllCars",
   },
   {
     path: "/top-10",
     component: PageCars,
+    name: "Top10",
   },
   {
     path: "/add",
     component: PageAddCar,
+    name: "AddCar",
     beforeEnter: validateUser,
   },
   {
     path: "/find-us",
+    name: "FindUs",
     component: PageFindUs,
   },
   {
     path: "/edit/:id",
     component: PageEditCar,
+    name: "EditCar",
     beforeEnter: validateUser,
   },
   {
     path: "/details/:id",
     component: PageCarDetails,
+    name: "CarDetails",
   },
   {
     path: "/user/login",
     component: PageLogin,
+    name: "Login",
     beforeEnter: isLoggedIn,
   },
   {
     path: "/user/register",
     component: PageRegister,
+    name: "Register",
     beforeEnter: isLoggedIn,
   },
   {
     path: "/user/profile",
     component: PageUserProfile,
+    name: "Profile",
     beforeEnter: validateUser,
   },
-  { path: "/:pathMatch(.*)*", component: PageNotFound },
+  { path: "/:pathMatch(.*)*", component: PageNotFound, name: "404" },
 ];
 
 const router = createRouter({

@@ -31,22 +31,22 @@ export default {
     <nav>
       <ul>
         <li>
-          <router-link to="/"> Home </router-link>
+          <router-link :to="{ name: 'Home' }"> Home </router-link>
         </li>
         <li>
-          <router-link to="/all-cars"> All Cars </router-link>
+          <router-link :to="{ name: 'AllCars' }"> All Cars </router-link>
         </li>
         <li>
-          <router-link to="/top-10"> Top 10 Cars </router-link>
+          <router-link :to="{ name: 'Top10' }"> Top 10 Cars </router-link>
         </li>
         <li>
-          <router-link to="/find-us"> Find Us </router-link>
+          <router-link :to="{ name: 'FindUs' }"> Find Us </router-link>
         </li>
         <li v-if="isAuthenticated">
-          <router-link to="/user/profile"> My Profile </router-link>
+          <router-link :to="{ name: 'Profile' }"> My Profile </router-link>
         </li>
         <li v-if="isAuthenticated">
-          <router-link to="/add"> Add a Car </router-link>
+          <router-link :to="{ name: 'AddCar' }"> Add a Car </router-link>
         </li>
         <li v-if="isAuthenticated">
           <a @click.prevent="handleLogout" href="javascript:void(0);">
@@ -55,16 +55,16 @@ export default {
         </li>
 
         <li class="auth" v-if="!isAuthenticated">
-          <router-link to="/user/login"> Login </router-link>
+          <router-link :to="{ name: 'Login' }"> Login </router-link>
         </li>
         <li v-if="!isAuthenticated">
-          <router-link to="/user/register"> Register </router-link>
+          <router-link :to="{ name: 'Register' }"> Register </router-link>
         </li>
       </ul>
     </nav>
     <div class="welcome" v-if="isAuthenticated">
       <span>Welcome, </span>
-      <router-link to="/user/profile">
+      <router-link :to="{ name: 'Profile' }">
         {{ email }}
       </router-link>
     </div>
