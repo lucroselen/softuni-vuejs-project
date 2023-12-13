@@ -24,8 +24,8 @@ export async function addCar(carData) {
     const res = await axiosInstance.post("/add", carData);
     return res.data;
   } catch (error) {
-    console.log(error);
-    return null;
+    let backendError = error.response.data.error;
+    return { error: backendError };
   }
 }
 
