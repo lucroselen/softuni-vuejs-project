@@ -1,9 +1,22 @@
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import {
+  email,
+  required,
+  minLength,
+  sameAs,
+  helpers,
+} from "@vuelidate/validators";
 import { mapActions } from "pinia";
 import { loginUser } from "../dataProviders/auth";
 import { useUserStore } from "../store/userStore";
+import Alert from "../components/Alert.vue";
 
 export default {
+  components: { Alert },
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       userData: {
@@ -14,26 +27,56 @@ export default {
         email: "",
       },
       isLoading: false,
+      backendError: null,
+      errorNotification: false,
     };
   },
   methods: {
     ...mapActions(useUserStore, ["setProfile"]),
 
     async onSubmit() {
-      this.isLoading = true;
-      const userData = await loginUser(this.userData, "register");
-      if (userData) {
-        this.setProfile(userData.id, userData.user);
-        this.$router.push("/all-cars");
+      this.errorNotification = false;
+      const isValid = await this.v$.$validate();
+      if (isValid) {
+        this.isLoading = true;
+        const userData = await loginUser(this.userData, "register");
+        console.log(userData);
+        if (userData.error) {
+          this.backendError = userData.error;
+          this.errorNotification = true;
+        }
+        if (!userData.error && userData) {
+          this.setProfile(userData.id, userData.user);
+          this.$router.push("/all-cars");
+        }
+        this.isLoading = false;
       }
-      this.isLoading = false;
     },
+  },
+  validations() {
+    return {
+      userData: {
+        firstName: { required, minLength: minLength(2) },
+        lastName: { required, minLength: minLength(2) },
+        email: { required, email },
+        password: { required, minLength: minLength(6) },
+        rePassword: {
+          required,
+          minLength: minLength(6),
+          sameAsPassword: helpers.withMessage(
+            "Both passwords must match!",
+            sameAs(this.userData.password)
+          ),
+        },
+      },
+    };
   },
 };
 </script>
 
 <template>
   <div class="registerContainer">
+    <Alert v-if="errorNotification" :alert="backendError"></Alert>
     <div class="registerWrapper">
       <div class="registerText">
         <h2>REGISTER</h2>
@@ -41,40 +84,90 @@ export default {
       </div>
       <form @submit.prevent="onSubmit">
         <input
-          v-model="userData.firstName"
+          v-model="v$.userData.firstName.$model"
           type="text"
           name="firstName"
           placeholder="First Name"
           :disabled="isLoading"
+          :class="{ error: v$.userData.firstName.$errors.length > 0 }"
         />
+        <div
+          v-for="error of v$.userData.firstName.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="error-msg">
+            {{ error.$message }}
+          </div>
+        </div>
         <input
-          v-model="userData.lastName"
+          v-model="v$.userData.lastName.$model"
           type="text"
           name="lastName"
           placeholder="Last Name"
           :disabled="isLoading"
+          :class="{ error: v$.userData.lastName.$errors.length > 0 }"
         />
+        <div
+          v-for="error of v$.userData.lastName.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="error-msg">
+            {{ error.$message }}
+          </div>
+        </div>
         <input
-          v-model="userData.email"
-          type="email"
+          v-model="v$.userData.email.$model"
+          text="email"
           name="email"
           placeholder="Email Address"
           :disabled="isLoading"
+          :class="{ error: v$.userData.lastName.$errors.length > 0 }"
         />
+        <div
+          v-for="error of v$.userData.email.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="error-msg">
+            {{ error.$message }}
+          </div>
+        </div>
         <input
-          v-model="userData.password"
+          v-model="v$.userData.password.$model"
           type="password"
           name="password"
           placeholder="Password"
           :disabled="isLoading"
+          :class="{ error: v$.userData.lastName.$errors.length > 0 }"
         />
+        <div
+          v-for="error of v$.userData.password.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="error-msg">
+            {{ error.$message }}
+          </div>
+        </div>
         <input
-          v-model="userData.rePassword"
+          v-model="v$.userData.rePassword.$model"
           type="password"
           name="rePassword"
           placeholder="Repeat Password"
           :disabled="isLoading"
+          :class="{ error: v$.userData.lastName.$errors.length > 0 }"
         />
+        <div
+          v-for="error of v$.userData.rePassword.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="error-msg">
+            {{ error.$message }}
+          </div>
+        </div>
         <button :disabled="isLoading">Register</button>
       </form>
       <div class="formLink">
@@ -86,6 +179,14 @@ export default {
 </template>
 
 <style scoped>
+.error-msg {
+  color: #dc3545;
+  font-size: 16px;
+}
+
+.registerWrapper form input.error {
+  border: 2px solid #dc3545;
+}
 .registerContainer {
   display: flex;
   align-items: center;
