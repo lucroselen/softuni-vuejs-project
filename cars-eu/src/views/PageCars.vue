@@ -48,7 +48,11 @@ export default {
           ></span
         >
         <p>
-          {{ car["description"] }}
+          {{
+            car["description"].length > 160
+              ? car["description"].substring(0, 160) + "..."
+              : car["description"]
+          }}
         </p>
         <router-link :to="`/details/${car['_id']}`">Details</router-link>
       </div>
