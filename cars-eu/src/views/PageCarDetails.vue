@@ -74,6 +74,16 @@ export default {
     calculateStars() {
       return starsGenerator(this.carData.car.rating);
     },
+    generateColor() {
+      return {
+        color:
+          this.carData.car["rating"] === 0
+            ? "black"
+            : this.carData.car["rating"] > 0
+            ? "orange"
+            : "red",
+      };
+    },
   },
 };
 </script>
@@ -105,9 +115,9 @@ export default {
               <p><b>Price:</b> {{ carData.car.price }} BGN</p>
               <p>
                 <b>Current car rating: </b
-                ><b style="color: orange"
-                  >{{ carData.car.rating }} {{ calculateStars }}</b
-                >
+                ><b :style="generateColor"
+                  >{{ carData.car.rating }} {{ calculateStars }}
+                </b>
               </p>
             </div>
             <div v-if="isAuthenticated">
