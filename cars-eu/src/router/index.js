@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import PageHome from "../views/PageHome.vue";
-import PageLogin from "../views/PageLogin.vue";
-import PageRegister from "../views/PageRegister.vue";
-import PageNotFound from "../views/PageNotFound.vue";
-import PageUserProfile from "../views/PageUserProfile.vue";
-import PageAddCar from "../views/PageAddCar.vue";
-import PageEditCar from "../views/PageEditCar.vue";
-import PageFindUs from "../views/PageFindUs.vue";
-import PageCars from "../views/PageCars.vue";
-import PageCarDetails from "../views/PageCarDetails.vue";
 import { useUserStore } from "../store/userStore";
+const PageHome = () => import("../views/PageHome.vue");
+const PageLogin = () => import("../views/PageLogin.vue");
+const PageRegister = () => import("../views/PageRegister.vue");
+const PageNotFound = () => import("../views/PageNotFound.vue");
+const PageUserProfile = () => import("../views/PageUserProfile.vue");
+const PageAddCar = () => import("../views/PageAddCar.vue");
+const PageEditCar = () => import("../views/PageEditCar.vue");
+const PageFindUs = () => import("../views/PageFindUs.vue");
+const PageCars = () => import("../views/PageCars.vue");
+const PageCarDetails = () => import("../views/PageCarDetails.vue");
 
 function validateUser() {
   const userStore = useUserStore();
