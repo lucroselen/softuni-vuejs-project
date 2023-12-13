@@ -25,7 +25,9 @@ export default {
 
 <template>
   <header>
-    <div class="navbar-brand"><router-link to="/">CARS EU</router-link></div>
+    <div class="navbar-brand">
+      <router-link to="/" custom>CARS EU</router-link>
+    </div>
     <nav>
       <ul>
         <li>
