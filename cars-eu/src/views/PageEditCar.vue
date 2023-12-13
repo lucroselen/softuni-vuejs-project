@@ -78,7 +78,7 @@ export default {
             ),
           },
           fuelType: { required, minLength: minLength(3) },
-          year: { required },
+          year: { required, minValue: minValue(1960) },
           description: { required, minLength: minLength(8) },
           mileage: { required, minminValue: minValue(0) },
           price: { required, minminValue: minValue(0) },
