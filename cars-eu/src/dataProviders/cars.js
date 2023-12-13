@@ -34,8 +34,8 @@ export async function editCar(carData, id) {
     const res = await axiosInstance.post(`/edit/${id}`, carData);
     return res.data;
   } catch (error) {
-    console.log(error);
-    return null;
+    let backendError = error.response.data.error;
+    return { error: backendError };
   }
 }
 
