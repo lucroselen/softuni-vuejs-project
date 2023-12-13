@@ -25,7 +25,7 @@ export default {
 
 <template>
   <header>
-    <div class="navbar-brand">CARS EU</div>
+    <div class="navbar-brand"><router-link to="/">CARS EU</router-link></div>
     <nav>
       <ul>
         <li>
@@ -116,6 +116,6 @@ header nav ul {
   color: #fff;
   font-size: 28px;
   font-weight: 500;
-  letter-spacing: 3px;
+  letter-spacing: 2.5px;
 }
 </style>
