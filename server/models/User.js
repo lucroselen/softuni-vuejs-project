@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
       validator: function (v) {
         return /^[A-Z][a-z]*$/.test(v);
       },
-      message: (props) => `${props.value} is not a valid name!`,
+      message: (props) =>
+        `${props.value} is not a valid name! Make sure that the name only contains English letters.`,
     },
   },
   lastName: {
@@ -27,7 +28,8 @@ const userSchema = new mongoose.Schema({
       validator: function (v) {
         return /^[A-Z][a-z]*$/.test(v);
       },
-      message: (props) => `${props.value} is not a valid name!`,
+      message: (props) =>
+        `${props.value} is not a valid name! Make sure that the name only contains English letters.`,
     },
   },
   email: {
