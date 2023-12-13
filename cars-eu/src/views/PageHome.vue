@@ -19,6 +19,16 @@ export default {
       <div class="home-container">
         <h1>Welcome to CARS EU</h1>
         <h2>Here you could find your dream car!</h2>
+        <h3>Today's highlight - the BMW M5 E60 V10:</h3>
+        <iframe
+          width="600"
+          height="355"
+          src="https://www.youtube.com/embed/YTitWDtipJE?si=MAccezicARZVBsCh"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
         <router-link
           :to="!isAuthenticated ? 'user/login' : '/all-cars'"
           class="btn-get-started"
@@ -62,9 +72,16 @@ export default {
 #home h2 {
   font-family: Arial, Helvetica, sans-serif;
   color: #eee;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   font-size: 24px;
   font-weight: normal;
+}
+
+h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  padding-bottom: 1%;
+  color: #eee;
 }
 
 #home .btn-get-started {
@@ -75,7 +92,7 @@ export default {
   padding: 8px 28px;
   border-radius: 50px;
   transition: 0.5s;
-  margin: 10px;
+  margin: 20px;
   border: 2px solid #fff;
   color: rgb(255, 255, 255);
 }
