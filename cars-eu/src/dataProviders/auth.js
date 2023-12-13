@@ -5,8 +5,8 @@ export async function loginUser(userData, type) {
     const res = await axiosInstance.post(`/users/${type}`, userData);
     return res.data;
   } catch (error) {
-    console.log(error);
-    return null;
+    let backendError = error.response.data.error;
+    return { error: backendError };
   }
 }
 
