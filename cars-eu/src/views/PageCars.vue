@@ -24,6 +24,13 @@ export default {
       this.isLoading = true;
       this.allCars = await getCars(window.location.href.split("/").pop());
       this.allCars.cars.forEach((e) => (e.stars = starsGenerator(e.rating)));
+      this.allCars.cars.forEach(
+        (e) =>
+          (e.description =
+            e["description"].length > 160
+              ? e["description"].substring(0, 160) + "..."
+              : e["description"])
+      );
       this.isLoading = false;
     },
   },
@@ -48,11 +55,7 @@ export default {
           ></span
         >
         <p>
-          {{
-            car["description"].length > 160
-              ? car["description"].substring(0, 160) + "..."
-              : car["description"]
-          }}
+          {{ car["description"] }}
         </p>
         <router-link :to="`/details/${car['_id']}`">Details</router-link>
       </div>
