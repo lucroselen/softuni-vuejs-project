@@ -30,7 +30,7 @@ export default {
   cursor: pointer;
   font-family: sans-serif;
   font-weight: 400;
-  z-index: 0;
+  z-index: 1;
 }
 
 .alertCheckbox {
