@@ -1,9 +1,16 @@
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { email, required, minLength } from "@vuelidate/validators";
 import { mapActions } from "pinia";
 import { loginUser } from "../dataProviders/auth";
 import { useUserStore } from "../store/userStore";
+import Alert from "../components/Alert.vue";
 
 export default {
+  components: { Alert },
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       userData: {
@@ -11,26 +18,46 @@ export default {
         password: "",
       },
       isLoading: false,
+      backendError: null,
+      errorNotification: false,
     };
   },
   methods: {
     ...mapActions(useUserStore, ["setProfile"]),
 
     async onSubmit() {
-      this.isLoading = true;
-      const userData = await loginUser(this.userData, "login");
-      if (userData) {
-        this.setProfile(userData.id, userData.user);
-        this.$router.push("/all-cars");
+      this.errorNotification = false;
+      const isValid = await this.v$.$validate();
+
+      if (isValid) {
+        this.isLoading = true;
+        const userData = await loginUser(this.userData, "login");
+        if (userData.error) {
+          this.backendError = userData.error;
+          this.errorNotification = true;
+        }
+        if (!userData.error && userData) {
+          this.setProfile(userData.id, userData.user);
+          this.$router.push("/all-cars");
+        }
+        this.isLoading = false;
       }
-      this.isLoading = false;
     },
+  },
+  validations() {
+    return {
+      userData: {
+        email: { required, email },
+        password: { required, minLength: minLength(6) },
+      },
+    };
   },
 };
 </script>
 
 <template>
   <div class="loginContainer">
+    <Alert v-if="errorNotification" :alert="backendError"></Alert>
     <div class="loginWrapper">
       <div class="loginText">
         <h2>LOGIN</h2>
@@ -38,19 +65,35 @@ export default {
       </div>
       <form @submit.prevent="onSubmit">
         <input
-          type="email"
+          type="text"
           name="email"
           placeholder="Email Address"
-          v-model="userData.email"
+          v-model="v$.userData.email.$model"
           :disabled="isLoading"
+          :class="{ error: v$.userData.email.$errors.length > 0 }"
         />
+        <div v-for="error of v$.userData.email.$errors" :key="error.$uid">
+          <div class="error-msg">
+            {{ error.$message }}
+          </div>
+        </div>
         <input
           type="password"
           name="password"
           placeholder="Password"
-          v-model="userData.password"
+          v-model="v$.userData.password.$model"
           :disabled="isLoading"
+          :class="{ error: v$.userData.password.$errors.length > 0 }"
         />
+        <div
+          v-for="error of v$.userData.password.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="error-msg">
+            {{ error.$message }}
+          </div>
+        </div>
         <button :disabled="isLoading" type="submit">Login</button>
       </form>
       <div class="formLink">
@@ -62,6 +105,14 @@ export default {
 </template>
 
 <style scoped>
+.error-msg {
+  color: #dc3545;
+  font-size: 16px;
+}
+
+.loginWrapper form input.error {
+  border: 2px solid #dc3545;
+}
 .loginContainer {
   display: flex;
   align-items: center;
