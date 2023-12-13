@@ -40,7 +40,6 @@ export default {
       if (isValid) {
         this.isLoading = true;
         const userData = await loginUser(this.userData, "register");
-        console.log(userData);
         if (userData.error) {
           this.backendError = userData.error;
           this.errorNotification = true;
